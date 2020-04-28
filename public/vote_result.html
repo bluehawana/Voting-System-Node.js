@@ -1,0 +1,38 @@
+<html>
+    <head>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">  </script>
+<script>
+  var socket = io();
+  socket.on('vote info', function(msg){
+      $('#party1').text(msg['1']);
+      $('#party2').text(msg['2']);
+      $('#party3').text(msg['3']);
+    });
+</script>
+<style>
+    td {
+        width:100px;
+    }
+    a {
+        margin-top:40px;
+        color:coral;
+        font-size: 19px;
+    }
+</style>
+    </head>
+    <body>
+        <div>
+            <h1>Most popular parties</h1>
+        <h3>The following is the vote result:</h3>
+        <table>
+            <tr><td>Allmänna Partiet</td><td><span id="party1">0</span></td></tr>
+            <tr><td>Speciella Partiet</td><td><span id="party3">0</span></td></tr>
+            <tr><td>Särskilda Partiet</td><td><span id="party2">0</span></td></tr>
+        </table>
+           
+        </div>
+
+        <div><a href = "/">Go to vote</a></div>
+    </body>
+</html>

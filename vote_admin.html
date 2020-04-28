@@ -1,0 +1,73 @@
+<html>
+    <head>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">  </script>
+<script>
+    $(function () {
+        $('#logout').click(function () {
+            $.post("http://localhost:3000/logout", {}, function (data) {
+                location.href = 'http://localhost:3000';
+            });
+        });
+
+        var socket = io();
+        socket.on('vote info', function (msg) {
+            $('#party1').text(msg['1']);
+            $('#party2').text(msg['2']);
+            $('#party3').text(msg['3']);
+        });
+
+        $('span').click(function (evt) {
+            var newValue = prompt('Enter a new value for this vote:');
+            if (newValue) {
+                var voteId = $(this).attr('id').substring(5);//get the vote id from the element id, ie.'party1' => '1'.
+                $.post("http://localhost:3000/vote", { id: voteId, num: newValue }, function (data) {
+                    if (!data.success) {
+                        alert('updated failed.');
+                    }
+                });
+            }
+        });
+    });
+</script>
+<style>
+    td {
+        width:100px;
+    }
+    tr {
+        height:40px;
+    }
+    a {
+        margin-top:40px;
+        color:coral;
+        font-size: 19px;
+    }
+    span {
+        cursor:pointer;
+    }
+    h2 {
+        color:coral;
+    }
+    #logout {
+        width:200px;
+        height:40px;
+        cursor:pointer;
+    }
+</style>
+    </head>
+    <body>
+        <div>
+            <h1>The vote result</h1>
+            
+        <h3>As admin, you can update the votes result by clicking the number to update it.</h3>
+        <table>
+            <tr><td>Allmänna partiet</td><td><span id="party1">0</span></td></tr>
+            <tr><td>Speciella Partiet</td><td><span id="party3">0</span></td></tr>
+            <tr><td>Särskilda Partiet</td><td><span id="party2">0</span></td></tr>
+        </table>
+           
+        </div>
+        
+        <div><input type="button" id="logout" value="Logout"></div>
+    </body>
+</html>

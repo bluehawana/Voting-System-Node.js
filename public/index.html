@@ -1,0 +1,65 @@
+<html><head>
+    <title>Vote system</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script>
+        $(function(){
+            $("#submit").click(function(){
+          $.post("http://localhost:3000/vote",{id:$("input[name='party']:checked").val()}, function(data){
+            if(data.success)
+              {
+                location.href = data.url;
+              }
+              else {
+                alert('Vote failed.');
+              }
+          });
+        });
+        });
+    </script>
+    <style>
+        div {
+            margin:20px 0;
+        }
+
+        button {
+            width:60px;
+            height:35px;
+            cursor:pointer;
+        }
+        a {
+        margin-top:40px 0;
+        color:coral;
+        font-size: 19px;
+        /* float:right;
+        display:block; */
+    }
+    
+    </style>
+</head>
+    <body>
+        <div><a href="admin.html">Login as admin</a></div>
+
+        <h1>Most popular parties for you to vote</h1>
+        <h3>Please select your favorite party from the following:</h3>
+
+            <div>
+                <input type="radio" id="party1" name="party" value="1"
+                       checked>
+                <label for="party1">Allmänna partiet</label>
+              </div>
+              
+              <div>
+                <input type="radio" id="party3" name="party" value="3">
+                <label for="party3">Speciella Partiet</label>
+              </div>
+
+              <div>
+                <input type="radio" id="party2" name="party" value="2">
+                <label for="party2">Särskilda Partiet</label>
+              </div>
+              
+              <div>
+                <button type="submit" id = "submit">Submit</button>
+              </div>
+    </body>
+</html>
